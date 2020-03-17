@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { tileLayer, latLng } from 'leaflet';
+import { tileLayer, latLng, polygon } from 'leaflet';
 import * as L from 'leaflet';
 import { ZonasService } from '../zonas.service';
 
@@ -9,6 +9,8 @@ import { ZonasService } from '../zonas.service';
   styleUrls: ['./mapa.component.css']
 })
 export class MapaComponent implements OnInit {
+
+  zonas = [];
 
   options = {
     layers: [
@@ -42,9 +44,18 @@ export class MapaComponent implements OnInit {
   constructor(private zonasService: ZonasService) { }
 
   ngOnInit() {
-    this.zonasService.getList().subscribe( zonas => {
+    this.zonasService.getList().subscribe( (zonas: Array<any>)=> {
       console.log('zonas', zonas);
+      const zonasAux = [];
+      zonas.forEach(element => {
+        zonasAux.push(polygon(element.mpoly.coordinates).on('click', this.showPopup.bind(this)));
+      });
+      this.zonas = zonasAux;
     });
+  }
+
+  showPopup(): void {
+    console.log("abrimos modal")
   }
 
 }

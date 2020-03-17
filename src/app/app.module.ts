@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MapaComponent } from './mapa/mapa.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     LeafletModule.forRoot(),
     LeafletDrawModule.forRoot(),
+    MatToolbarModule,
+    MatCardModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
