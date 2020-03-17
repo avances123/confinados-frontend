@@ -11,7 +11,8 @@ import { ZonasService } from '../zonas.service';
 export class MapaComponent implements OnInit {
 
   zonas = [];
-
+  poligonoActivo;
+  idActivo;
   options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -19,8 +20,6 @@ export class MapaComponent implements OnInit {
     zoom: 6,
     center: latLng(40.416775, -3.703790)
   };
-
-
   drawOptions = {
     position: 'topright',
     draw: {
@@ -44,18 +43,29 @@ export class MapaComponent implements OnInit {
   constructor(private zonasService: ZonasService) { }
 
   ngOnInit() {
-    this.zonasService.getList().subscribe( (zonas: Array<any>)=> {
+    this.zonasService.getList().subscribe( (zonas: Array<any>) => {
       console.log('zonas', zonas);
       const zonasAux = [];
       zonas.forEach(element => {
-        zonasAux.push(polygon(element.mpoly.coordinates).on('click', this.showPopup.bind(this)));
+        const layer = polygon(L.GeoJSON.coordsToLatLngs(element.mpoly.coordinates, 2));
+        zonasAux.push(
+          layer.on('click', () => {
+            if (this.poligonoActivo) {
+              this.poligonoActivo.setStyle({fillColor: '#000000'});
+            }
+            layer.setStyle({fillColor: '#bb00aF'});
+            this.poligonoActivo = layer;
+            this.idActivo = element.id;
+            console.log('poligono activo', this.poligonoActivo, this.idActivo);
+          })
+        );
       });
+      console.log(zonasAux);
       this.zonas = zonasAux;
     });
   }
 
-  showPopup(): void {
-    console.log("abrimos modal")
+  showPopup(el, la): void {
   }
 
 }
