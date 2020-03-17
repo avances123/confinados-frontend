@@ -1,6 +1,13 @@
-<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="10px" style="padding: 10px;">
     
-    <div fxFlex="75" fxLayout="column" fxLayoutAlign="space-evenly" fxLayoutGap="20px" >
+    <div fxLayout="column" fxLayoutAlign="space-evenly" fxLayoutGap="20px" style="padding: 1em;">
+        <mat-card >
+            <mat-card-content>
+                En este mapa puedes ver distintos poligonos, son salas de chat de vecinos confinados en esa zona.Haz click en una para entrar a chatear con esos confinados
+                <br>
+                Puedes crear tu region dibujandola en el mapa y se creara una sala nueva para chatear
+            </mat-card-content>
+        </mat-card>
+
         <div style="height: 800px;"
             leaflet
             leafletDraw
@@ -10,11 +17,4 @@
         </div>
     </div>
 
-    <mat-card fxFlex  >
-        <mat-card-content *ngIf="!poligonoActivo">
-            En este mapa puedes ver distintos poligonos, son salas de chat de vecinos confinados en esa zona.Haz click en una para entrar a chatear con esos confinados
-            <br>
-            Puedes crear tu region dibujandola en el mapa y se creara una sala nueva para chatear
-        </mat-card-content>
-    </mat-card>
-</div>
+

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { tileLayer, latLng, polygon } from 'leaflet';
 import * as L from 'leaflet';
 import { ZonasService } from '../zonas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mapa',
@@ -11,8 +12,6 @@ import { ZonasService } from '../zonas.service';
 export class MapaComponent implements OnInit {
 
   zonas = [];
-  poligonoActivo;
-  idActivo;
   options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -40,7 +39,11 @@ export class MapaComponent implements OnInit {
     }
   };
 
-  constructor(private zonasService: ZonasService) { }
+  constructor(
+    private ngZone: NgZone,
+    private zonasService: ZonasService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.zonasService.getList().subscribe( (zonas: Array<any>) => {
@@ -50,22 +53,13 @@ export class MapaComponent implements OnInit {
         const layer = polygon(L.GeoJSON.coordsToLatLngs(element.mpoly.coordinates, 2));
         zonasAux.push(
           layer.on('click', () => {
-            if (this.poligonoActivo) {
-              this.poligonoActivo.setStyle({fillColor: '#000000'});
-            }
-            layer.setStyle({fillColor: '#bb00aF'});
-            this.poligonoActivo = layer;
-            this.idActivo = element.id;
-            console.log('poligono activo', this.poligonoActivo, this.idActivo);
+            console.log('Abrimos chat para el id', element.id);
+            this.ngZone.run(() => this.router.navigate(['/chat/', element.id]));
           })
         );
       });
-      console.log(zonasAux);
       this.zonas = zonasAux;
     });
-  }
-
-  showPopup(el, la): void {
   }
 
 }
