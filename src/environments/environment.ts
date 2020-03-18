@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_host: 'http://confinados.fabio.xyz'
+  api_host: 'https://confinados.fabio.xyz'
 };
 
 /*

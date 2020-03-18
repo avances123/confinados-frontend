@@ -3,6 +3,13 @@ import { tileLayer, latLng, polygon } from 'leaflet';
 import * as L from 'leaflet';
 import { ZonasService } from '../zonas.service';
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
+
+L.drawLocal.draw.toolbar.buttons.polygon = 'Dibuja un area en el mapa para chatear con tus vecinos';
+L.drawLocal.draw.handlers.polygon.tooltip.start = 'Haz click para empezar a dibujar';
+
+const LIMITE_AREA = 10000000;
+
 
 @Component({
   selector: 'app-mapa',
@@ -14,52 +21,63 @@ export class MapaComponent implements OnInit {
   zonas = [];
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
     ],
-    zoom: 6,
+    zoom: 7,
     center: latLng(40.416775, -3.703790)
   };
   drawOptions = {
-    position: 'topright',
+    position: 'topleft',
     draw: {
-       marker: {
-          icon: L.icon({
-              iconSize: [ 25, 41 ],
-              iconAnchor: [ 13, 41 ],
-              iconUrl: 'assets/marker-icon.png',
-              shadowUrl: 'assets/marker-shadow.png'
-          })
-       },
-       polyline: false,
-       circle: {
-           shapeOptions: {
-               color: '#aaaaaa'
-           }
-       }
+      marker: false,
+      polyline: false,
+      circle: false,
+      rectangle: false,
+      circlemarker: false,
+    },
+    edit: {
+      edit: false,
+      remove: false
     }
   };
 
   constructor(
     private ngZone: NgZone,
     private zonasService: ZonasService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    this.zonasService.getList().subscribe( (zonas: Array<any>) => {
-      console.log('zonas', zonas);
+    this.zonasService.getList().subscribe((zonas: Array<any>) => {
+      // console.log('zonas', zonas);
       const zonasAux = [];
       zonas.forEach(element => {
         const layer = polygon(L.GeoJSON.coordsToLatLngs(element.mpoly.coordinates, 2));
         zonasAux.push(
           layer.on('click', () => {
-            console.log('Abrimos chat para el id', element.id);
             this.ngZone.run(() => this.router.navigate(['/chat/', element.id]));
           })
         );
       });
+
       this.zonas = zonasAux;
     });
   }
+
+  enviarZona(ev) {
+    const area = L.GeometryUtil.geodesicArea(ev.layer.getLatLngs()[0]);
+    if (area > LIMITE_AREA) {
+      this.snackBar.open('El area es demasiado grande, prueba con una mas pequeña', '', { duration: 3000});
+      ev.layer.remove();
+      return;
+    }
+    this.zonasService.create(ev.layer).subscribe( (element: any) => {
+      ev.layer.on('click', () => {
+        this.ngZone.run(() => this.router.navigate(['/chat/', element.id]));
+      });
+    });
+  }
+
 
 }

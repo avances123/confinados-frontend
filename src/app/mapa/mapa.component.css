@@ -1,0 +1,4 @@
+.mapa-container {
+    height: calc(100% - 64px);
+    position: relative !important; 
+}

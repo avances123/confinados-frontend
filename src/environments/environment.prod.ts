@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_host: 'http://confinados.fabio.xyz:8000'
+  api_host: 'https://confinados.fabio.xyz'
 };
