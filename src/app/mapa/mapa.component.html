@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <span fxFlex>Habla con tus vecinos confinados</span>
-    <button mat-icon-button aria-label="Ayuda" routerLink="/chat/confinados_ayuda">
+    <button mat-icon-button aria-label="Ayuda" routerLink="/ayuda">
         <mat-icon>help</mat-icon>
     </button>
 </mat-toolbar>
@@ -8,9 +8,7 @@
 <div fxLayout="column" fxLayoutAlign="space-evenly" fxLayoutGap="20px" style="padding: 1em;">
     <mat-card >
         <mat-card-content>
-            En este mapa puedes ver distintos regiones en azul, son salas de chat de vecinos confinados en esa zona.Haz click en una para entrar a chatear con ellos
-            <br> 
-            Puedes crear tu region dibujandola en el mapa, pulsa el icono que esta al lado del zoom, y se creara una sala nueva para chatear
+            Crea o selecciona un area donde quieras chatear, mas informacion <a  routerLink="/ayuda">aqui</a>
         </mat-card-content>
     </mat-card>
     
@@ -20,6 +18,8 @@
         [leafletOptions]="options"
         [leafletDrawOptions]="drawOptions"
         [leafletLayers]="zonas"
+        [(leafletZoom)]="zoom"
+        [(leafletCenter)]="center"
         (leafletDrawCreated)="enviarZona($event)">
     </div>
     

@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material';
 L.drawLocal.draw.toolbar.buttons.polygon = 'Dibuja un area en el mapa para chatear con tus vecinos';
 L.drawLocal.draw.handlers.polygon.tooltip.start = 'Haz click para empezar a dibujar';
 
-const LIMITE_AREA = 10000000;
+const LIMITE_AREA = 1000000;
 
 
 @Component({
@@ -18,6 +18,8 @@ const LIMITE_AREA = 10000000;
 })
 export class MapaComponent implements OnInit {
 
+  zoom = 7;
+  center = latLng(40.416775, -3.703790);
   zonas = [];
   options = {
     layers: [
@@ -49,6 +51,7 @@ export class MapaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.findMe();
     this.zonasService.getList().subscribe((zonas: Array<any>) => {
       // console.log('zonas', zonas);
       const zonasAux = [];
@@ -73,10 +76,20 @@ export class MapaComponent implements OnInit {
       return;
     }
     this.zonasService.create(ev.layer).subscribe( (element: any) => {
-      ev.layer.on('click', () => {
-        this.ngZone.run(() => this.router.navigate(['/chat/', element.id]));
-      });
+      this.router.navigate(['/chat/', element.id]);
     });
+  }
+
+
+  findMe() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = L.latLng(position.coords.latitude, position.coords.longitude );
+        this.zoom = 15;
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
   }
 
 

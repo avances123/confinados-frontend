@@ -15,12 +15,14 @@ import { ChatComponent } from './chat/chat.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material';
+import { AyudaComponent } from './ayuda/ayuda.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapaComponent,
-    ChatComponent
+    ChatComponent,
+    AyudaComponent
   ],
   imports: [
     BrowserModule,
