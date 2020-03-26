@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+
+<mat-toolbar fxHide fxShow.lt-md  color="primary">
+    <span fxFlex>Habla con tus vecinos confinados</span>
+</mat-toolbar>
+
+
+
+<div fxLayout="column" fxHide fxShow.lt-md style="padding: 2em;" fxLayoutGap="2em">
+
+    <mat-card class="mat-elevation-z2">
+        <h2 class="mat-headline">Chat de vecinos</h2>
+        <p class="body">
+            Llevamos ya unos dias confinados, a veces nos podemos sentir demasiado aislados, aunque a escasos metros estan tus vecinos en la misma situación.
+            Esta aplicación sirve para crear un chat a partir de un area pequeña donde tu te encuentras para hablar con tus vecinos próximos.
+            Esos vecinos que miras cuando aplaudes, pueden necesitar de ti o tu de ellos para cualquier cosa , aunque sea solo para divertirse. En este chat os podeis encontrar.
+        </p>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z2">
+        <h2 class="mat-headline">Aún no funciona en el movil</h2>
+        <p class="body">
+            Al ser una aplicación hecha tan rápido, aún no fucniona en el movil, pero si visitas esta misma web en el ordenador todo funcionara correctamente, (o casi todo).
+            Recomendamos tener una pestaña en el explorador abierta siempre con el chat de tu manzana/barrio y asi poder estar pendiente de las novedades de tus vecinos.
+        </p>
+    </mat-card>
+</div>
+
+<div fxShow fxHide.lt-md style="height: 100%;">
+    <router-outlet></router-outlet>
+</div>

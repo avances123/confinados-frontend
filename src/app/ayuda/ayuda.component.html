@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+    <span fxFlex>Habla con tus vecinos confinados</span>
+
+    <button mat-icon-button aria-label="Volver al mapa" routerLink="/mapa">
+        <mat-icon>edit_location</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="20px">
+    <span fxFlex></span>
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px" style="padding: 2em;" fxFlex.gt-md="60" fxFlex.lt-md="85" >
+        <h1 class="mat-display-1">Chatea con tus vecinos proximos</h1>
+    
+        <mat-card class="mat-elevation-z8">
+            <h2 class="mat-headline"> Motivacion</h2>
+            <p class="body">
+                Llevamos ya unos dias confinados, a veces nos podemos sentir demasiado aislados, aunque a escasos metros estan tus vecinos en la misma situacion.
+                Esta aplicacion sirve para crear un chat a partir de un area pequeña donde tu te encuentras para hablar con tus vecinos próximos.
+                Esos vecinos que miras cuando aplaudes, pueden necesitar de ti o tu de ellos para cualquier cosa , aunque sea solo para divertirse. En este chat os podeis encontrar.
+            </p>
+        </mat-card>
+    
+        <h2 class="mat-headline"> Uso</h2>
+        <p class="body">
+            En la seccion del mapa podras ver tu ciudad, busca tu barrio, tu casa, tu bloque, el bloque de enfrente y dibuja una region con la ayuda del mapa, 
+            es muy sencillo dibujarla, solo tienes que ir poniendo punto y unir el ultimo con el primero
+        </p>
+        <img alt="foto1" src="./assets/foto1.png">
+        <p class="body">
+            Al acabar de cerrar el poligono, se creara una sala de chat para ese area. 
+            En esta pagina podemos elegir que nombre queremos usar en el chat, y podremos entrar pulsando el boton verde.
+        </p>
+        <img alt="foto2" src="./assets/foto2.png">
+    
+
+        <h2  class="mat-headline">Estas solo en la sala?</h2>
+        <p class="body">
+            Aun no se conoce la web, este aplicacion tiene sentido si difundimos su existencia en las redes sociales, asi tu vecino puede enterarse que existe y entrar.
+            Te pido que te quedes dentro del chat aunque no te conteste nadie, si funciona la difusion, pronto tendras a tu vecino contigo en el chat.
+        </p>
+
+        <h2 class="mat-headline"> Quieres colaborar</h2>
+        <p class="body">
+            Lo estoy haciendo solo en mi casa, y esta claro que es muy cutre, pero si te gusta la idea y estas en casa aburrid@,
+            entra en el IRC (sistema que usa esta web) en freenode canal #confinados_ayuda, o <a routerLink="/chat/confinados_ayuda">aqui</a> 
+        </p>
+    </div>
+    <span fxFlex></span>
+</div>
+
