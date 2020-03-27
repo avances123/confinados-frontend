@@ -1,17 +1,67 @@
-<mat-toolbar color="primary">
-    <span fxFlex>Habla con tus vecinos confinados</span>
+<mat-toolbar color="primary" class="barra">
+  <span fxFlex>Mensajes</span>
 
-    <button mat-icon-button aria-label="Ayuda" routerLink="/ayuda">
-        <mat-icon>help</mat-icon>
-    </button>
 
-    <button mat-icon-button aria-label="Volver al mapa" routerLink="/mapa">
-        <mat-icon>edit_location</mat-icon>
-    </button>
-    
+  <button mat-icon-button color="warn" aria-label="Nuevo" (click)="nuevoMens=!nuevoMens" *ngIf="!nuevoMens">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  
+  <button mat-icon-button aria-label="Volver al mapa" routerLink="/mapa">
+    <mat-icon>edit_location</mat-icon>
+  </button> 
 </mat-toolbar>
 
+<div [hidden]="!nuevoMens">
+  <h3 class="mat-h1" style="margin: 1em;">Nuevo mensaje</h3>
+  <mat-card style="margin: 1em;" fxLayout="column">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput [formControl]="autor" required />
+      <mat-error *ngIf="autor.invalid">Pon tu nombre</mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Titulo</mat-label>
+      <input matInput [formControl]="titulo" required />
+      <mat-error *ngIf="titulo.invalid">Titula tu mensaje</mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Texto</mat-label>
+      <textarea matInput [formControl]="texto" required></textarea>
+      <mat-error *ngIf="texto.invalid">Escribe tu mensaje</mat-error>
+    </mat-form-field>
+    <mat-card-actions>
+      <button mat-button (click)="submit()">ENVIAR</button>
+      <button mat-button (click)="nuevoMens=false">CANCELAR</button>
 
-<div class="kiwi-container">
-    <iframe [src]="url" style="border:0; width:100%; height:100%;"></iframe>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div [hidden]="nuevoMens" >
+  <h3 class="mat-h1" style="margin: 1em;">Mensajes de tus vecinos</h3>
+
+  <mat-card *ngFor="let mens of listaMensajes | async" style="margin: 1em;">
+    <mat-card-header>
+      <mat-card-title>{{ mens.titulo }}</mat-card-title>
+      <mat-card-subtitle>{{ mens.autor }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{ mens.texto }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+
+
+  <mat-card *ngIf="(listaMensajes | async)?.length == 0" style="margin: 1em;" >
+    <mat-card-content>
+        <p>
+          Aun no hay mensajes, usa el icono de la barra de herramientas y escribe tu uno!
+        </p>
+      </mat-card-content>
+  </mat-card>
 </div>

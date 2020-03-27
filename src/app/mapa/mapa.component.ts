@@ -85,10 +85,10 @@ export class MapaComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.center = L.latLng(position.coords.latitude, position.coords.longitude );
-        this.zoom = 15;
+        this.zoom = 13;
       });
     } else {
-      alert("Geolocation is not supported by this browser.");
+      alert('Geolocation is not supported by this browser.');
     }
   }
 

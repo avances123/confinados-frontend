@@ -1,3 +1,9 @@
 .kiwi-container {
     height: calc(100% - 64px);
 }
+
+.barra {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+  }
